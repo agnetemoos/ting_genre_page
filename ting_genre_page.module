@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the ting_genre_page feature.
+ */
+
+include_once 'ting_genre_page.features.inc';
