@@ -19,6 +19,18 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
- * 
+ * Get nodes with the specified tag value (ding_content_tags Vocabulary).
+ *
+ * @param $
  */
 
+/**
+ * Helper function to get the first value from the specified field.
+ */
+function _ting_genre_page_get_field_value($node, $field_name) {
+	if (isset($node->{$field_name}) && !empty($node->{$field_name})) {
+		$value = field_get_items('node', $node, $field_name);
+		return array_shift(array_shift(array_values($value)));
+	}
+	return FALSE;
+}

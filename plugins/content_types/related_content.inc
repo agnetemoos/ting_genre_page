@@ -18,9 +18,11 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
   // Since the context is required we can be sure it's always there.
   $node = $context->data;
   $block = new stdClass();
-  // Needed because we can't be sure that this plugin is only attached
+  // Needed because we can't be sure that this plugin is used only on 
+  // genre_page
   if ($node->type == 'genre_page') {
-
+    $tag = _ting_genre_page_get_field_value($node, 'field_ting_genre_page_tags');
+    file_put_contents("/home/drupalpro/debug/debug.txt", print_r($tag , TRUE), FILE_APPEND);
   }
 //  $tid = taxonomy_get_term_by_name('krimi');
 //  $nodes = taxonomy_select_nodes($tid);
