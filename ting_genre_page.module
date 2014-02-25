@@ -24,27 +24,27 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
  * 
  * @param $tid
  *   The ID of the term to match against.
- * @param $node_type
- *   The type of nodes to return.
- * @param $field_name
- *   The name of the field containing the tag value.
  * @param $count
  *   The max number of nodes to return.
- * @param $limit
- *   A
+ * @param $time_limit
+ *   A UNIX timestamp specifying a limit on the creation date of returned nodes.
  *
  * @return
  *   An array of node objects keyed by nid.
  */
-function ting_genre_page_get_nodes_with_term($tid, $node_type, $field_name, $count, $time_limit = NULL) {
-	$query = new EntityFieldQuery();
+function ting_genre_page_get_nodes_with_term($tid, $count, $time_limit = NULL) {
+	$return = array();
+	$nids = taxonomy_select_nodes($tid, FALSE, $count);
+	$nodes = node_load_multiple($nids);
+	file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nodes , TRUE), FILE_APPEND);
+	/*$query = new EntityFieldQuery();
 	$query->entityCondition('entity_type', 'node')
 		->entityCondition('bundle', $node_type)
 		->fieldCondition($field_name, 'tid', $tid)
 		->range(0, $count);
 	if (isset($time_limit)) {
 		$query->propertyCondition('created', $time_limit, '>=');
-	}
+	}*/
 } 
 
 /**
