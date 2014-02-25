@@ -25,7 +25,9 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
  */
 
 /**
- * Helper function to get the first value from the specified field.
+ * Helper function to get the value from the field with the specified field 
+ * name. This function is only meant to be used with single-value-fields, and
+ * will only return the first value in case of a multi-value-field.
  */
 function _ting_genre_page_get_field_value($node, $field_name) {
 	if (isset($node->{$field_name}) && !empty($node->{$field_name})) {

@@ -21,8 +21,13 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
   // Needed because we can't be sure that this plugin is used only on 
   // genre_page
   if ($node->type == 'genre_page') {
+    // Get the tag of this genre page.
     $tag = _ting_genre_page_get_field_value($node, 'field_ting_genre_page_tags');
-    file_put_contents("/home/drupalpro/debug/debug.txt", print_r($tag , TRUE), FILE_APPEND);
+    // Get the total related content count.
+    $count = _ting_genre_page_get_field_value($node, 'field_related_content_count');
+    // Get the related event count.
+    $event_count = _ting_genre_page_get_field_value($node, 'field_related_event_count');
+    file_put_contents("/home/drupalpro/debug/debug.txt", print_r($event_count , TRUE), FILE_APPEND);
   }
 //  $tid = taxonomy_get_term_by_name('krimi');
 //  $nodes = taxonomy_select_nodes($tid);
