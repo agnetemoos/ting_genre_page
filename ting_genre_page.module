@@ -19,10 +19,33 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
- * Get nodes with the specified tag value (ding_content_tags Vocabulary).
+ * Get nodes of type 'ding_event' and 'ding_news' which is tagged with the 
+ * specified term value from the ding_content_tags vocabulary.
+ * 
+ * @param $tid
+ *   The ID of the term to match against.
+ * @param $node_type
+ *   The type of nodes to return.
+ * @param $field_name
+ *   The name of the field containing the tag value.
+ * @param $count
+ *   The max number of nodes to return.
+ * @param $limit
+ *   A
  *
- * @param $
+ * @return
+ *   An array of node objects keyed by nid.
  */
+function ting_genre_page_get_nodes_with_term($tid, $node_type, $field_name, $count, $time_limit = NULL) {
+	$query = new EntityFieldQuery();
+	$query->entityCondition('entity_type', 'node')
+		->entityCondition('bundle', $node_type)
+		->fieldCondition($field_name, 'tid', $tid)
+		->range(0, $count);
+	if (isset($time_limit)) {
+		$query->propertyCondition('created', $time_limit, '>=');
+	}
+} 
 
 /**
  * Helper function to get the value from the field with the specified field 

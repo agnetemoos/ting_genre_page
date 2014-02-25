@@ -21,16 +21,36 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
   // Needed because we can't be sure that this plugin is used only on 
   // genre_page
   if ($node->type == 'genre_page') {
-    // Get the tag of this genre page.
-    $tag = _ting_genre_page_get_field_value($node, 'field_ting_genre_page_tags');
-    // Get the total related content count.
-    $count = _ting_genre_page_get_field_value($node, 'field_related_content_count');
-    // Get the related event count.
-    $event_count = _ting_genre_page_get_field_value($node, 'field_related_event_count');
-    file_put_contents("/home/drupalpro/debug/debug.txt", print_r($event_count , TRUE), FILE_APPEND);
+    // Get the ID of term this genre page is tagged with.
+    $tid = _ting_genre_page_get_field_value($node, 
+      'field_ting_genre_page_tags');
+    $nodes = array();
+    // Only try to get the nodes if the genre page was tagged.
+    if ($tid) {
+      // Get the total related content count.W
+      $count = _ting_genre_page_get_field_value($node, 
+        'field_related_content_count');
+      // Get the related event count.
+      $event_count = _ting_genre_page_get_field_value($node, 
+        'field_related_event_count');
+      // Get the date limit for related content.
+      $time_limit = _ting_genre_page_get_field_value($node, 
+        'field_related_content_limit');
+      $time_limit = $time_limit ? strtotime($time_limit) : NULL;
+      $nodes = ting_genre_page_get_nodes_with_term($tid, 'ding_event', 
+        'field_ding_event_tags', $event_count, $time_limit);
+      // If there's room for more we fill it up with nodes of type 'ding_news'.
+      $count -= count($nodes);
+      /*if ($count > 0) {
+        $nodes += ting_genre_page_get_nodes_with_term($tid, 'ding_news',
+          'field_ding_news_tags', $count, $time_limit);
+      }*/
+    }
+
+    file_put_contents("/home/drupalpro/debug/debug.txt", print_r($limit , TRUE), FILE_APPEND);
   }
 //  $tid = taxonomy_get_term_by_name('krimi');
-//  $nodes = taxonomy_select_nodes($tid);
+//  $nodes = taxonomy_select_nodes($tid); 
   $block->content = '<div id="ting-search-context"> test</div>';
   return $block;
 }
