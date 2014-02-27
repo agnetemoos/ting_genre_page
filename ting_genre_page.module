@@ -19,33 +19,32 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
- * Get nodes of type 'ding_event' and 'ding_news' which is tagged with the 
- * specified term value from the ding_content_tags vocabulary.
+ * Get nodes of type 'ding_event' with the specified tag.
  * 
  * @param $tid
- *   The ID of the term to match against.
- * @param $count
+ *   The ID of the term (tag) to match against.
+ * @param $count_limit
  *   The max number of nodes to return.
  * @param $time_limit
- *   A UNIX timestamp specifying a limit on the creation date of returned nodes.
- *
- * @return
- *   An array of node objects keyed by nid.
+ *   A time limit in days specifying how long into the future an event is
+ *   allowed to start.
  */
-function ting_genre_page_get_nodes_with_term($tid, $count, $time_limit = NULL) {
-	$return = array();
-	$nids = taxonomy_select_nodes($tid, FALSE, $count);
-	$nodes = node_load_multiple($nids);
-	file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nodes , TRUE), FILE_APPEND);
-	/*$query = new EntityFieldQuery();
+function ting_genre_page_get_events_with_term($tid, $count_limit, $time_limit) {
+	$query = new EntityFieldQuery();
 	$query->entityCondition('entity_type', 'node')
-		->entityCondition('bundle', $node_type)
-		->fieldCondition($field_name, 'tid', $tid)
-		->range(0, $count);
-	if (isset($time_limit)) {
-		$query->propertyCondition('created', $time_limit, '>=');
-	}*/
-} 
+		->entityCondition('bundle', 'ding_event')
+		->propertyCondition('status', 1)
+		->fieldCondition('field_ding_event_tags', 'tid', $tid);
+	$return = array();
+	$result = $query->execute();
+	if (isset($result['node'])) {
+		$nids = array_keys($result['node']);
+		$now = REQUEST_TIME;
+		$time_limit = $now + ($time_limit * 24 * 60 * 60);
+		// Loop through the result to try and find nodes
+		file_put_contents("/home/drupalpro/debug/debug.txt", print_r($time_limit , TRUE), FILE_APPEND);	
+	}	
+}
 
 /**
  * Helper function to get the value from the field with the specified field 
