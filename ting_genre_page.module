@@ -24,8 +24,9 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
 function ting_genre_page_init() {
 	$called = &drupal_Static(__FUNCTION__);
 	if (!$called) {
-		
-		file_put_contents("/home/drupalpro/debug/debug.txt", print_r($time_limit , TRUE), FILE_APPEND);
+		$nids = ting_genre_page_get_events_with_term(10, 5, 352);
+		$nodes = node_load_multiple($nids);
+		file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nids , TRUE), FILE_APPEND);
 	}	
 }
 
@@ -39,6 +40,9 @@ function ting_genre_page_init() {
  * @param $time_limit
  *   A time limit in days specifying how many days into the future an event, 
  *   in the return array, is allowed to start.
+ *
+ * @return $return
+ *   An array node IDs.
  */
 function ting_genre_page_get_events_with_term($tid, $count_limit, $time_limit) {
 	// Convert datetimes to the database format.
@@ -53,16 +57,12 @@ function ting_genre_page_get_events_with_term($tid, $count_limit, $time_limit) {
 		->fieldCondition('field_ding_event_date', 'value2', $now, '>')
 		// Add the supplied $time_limit contraint to our query.
 		->fieldCondition('field_ding_event_date', 'value', $time_limit, '<=')
-		// Get the nearest events (start time).
+		// Get the events with the nearest start datetime.
 		->fieldOrderBy('field_ding_event_date', 'value', 'ASC')
 		// Add the supplied $count_limit constraint.
 		->range(0, $count_limit);
 	$result = $query->execute();
-	$return = array();
-	if (isset($result['node'])) {
-		$nids = array_keys($result['node']);
-		$return = noad_load_multiple($nids);
-	}
+	$return = isset($result['node']) ? array_keys($result['node']) : array();
 	return $return;	
 }
 
