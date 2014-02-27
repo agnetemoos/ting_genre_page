@@ -26,7 +26,6 @@ function ting_genre_page_init() {
 	if (!$called) {
 		$nids = ting_genre_page_get_events_with_terms(10, 1, 352);
 		$nodes = node_load_multiple($nids);
-		file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nids , TRUE), FILE_APPEND);
 	}	
 }
 
@@ -82,11 +81,11 @@ function ting_genre_page_get_news_with_terms($tids, $count_limit) {
 	$now = time();
 	$query = new EntityFieldQuery();
 	$query->entityCondition('entity_type', 'node')
-		->entityCondition('bundle')
+		->entityCondition('bundle', 'ding_news')
 		->propertyCondition('status', 1)
-		->fieldCondition('field_ding_news_tag', 'tid', $tids)
+		->fieldCondition('field_ding_news_tags', 'tid', $tids)
 		// Ensure we get the most recent news.
-		->propertyOrdeBy('created', 'DESC')
+		->propertyOrderBy('created', 'DESC')
 		->range(0, $count_limit);
 	$result = $query->execute();
 	return isset($result['node']) ? array_keys($result['node']) : array();

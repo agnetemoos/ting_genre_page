@@ -22,26 +22,29 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
   if ($node->type == 'genre_page') {
     // Get the ID of term this genre page is tagged with.
     $field_name = 'field_ting_genre_page_tags';
-    $tid = _ting_genre_page_get_field_value($node, $field_name);
+    $tid = _ting_genre_page_get_setting($node, $field_name);
     // Only try to get the nodes if the genre page was tagged.
     if ($tid) {
       $tids = array($tid);
       // Get the event count limit.
       $field_name = 'field_related_event_count';
-      $count_limit = _ting_genre_page_get_field_value($node, $field_name);
+      $count_limit = _ting_genre_page_get_setting($node, $field_name);
       // Get the event time limit.
       $field_name = 'field_related_event_time_limit';
-      $time_limit = _ting_genre_page_get_field_value($node, $field_name);
+      $time_limit = _ting_genre_page_get_setting($node, $field_name);
       $nids = ting_genre_page_get_events_with_terms($tid, $count_limit, $time_limit);
       // Get the total count
       $field_name = 'field_related_content_count';
-      $count_limit = _ting_genre_page_get_field_value($node, $field_name);
+      $count_limit = _ting_genre_page_get_setting($node, $field_name);
       // Substract the events found above from the total count, and fill the
       // remaining space with nodes of type 'ding_news'.
       $count_limit -= count($nids);
       if ($count_limit > 0) {
-
+        $temp = ting_genre_page_get_news_with_terms($tid, $count_limit);
+        $nids = array_merge($nids, $temp);
       }
+      $nodes = node_load_multiple($nids);
+      file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nids , TRUE), FILE_APPEND);
     }
   }
   $block->content = $content;
