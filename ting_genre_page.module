@@ -24,17 +24,17 @@ function ting_genre_page_ctools_plugin_directory($module, $plugin) {
 function ting_genre_page_init() {
 	$called = &drupal_Static(__FUNCTION__);
 	if (!$called) {
-		$nids = ting_genre_page_get_events_with_term(10, 5, 352);
+		$nids = ting_genre_page_get_events_with_terms(10, 1, 352);
 		$nodes = node_load_multiple($nids);
 		file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nids , TRUE), FILE_APPEND);
 	}	
 }
 
 /**
- * Get nodes of type 'ding_event' with the specified tag.
+ * Get nodes of type 'ding_event' with the specified tags.
  * 
- * @param $tid
- *   The ID of the term (tag) to match against.
+ * @param $tids
+ *   A string specifying a term ID or and array of term IDs to match against.
  * @param $count_limit
  *   The max number of nodes to return.
  * @param $time_limit
@@ -42,9 +42,10 @@ function ting_genre_page_init() {
  *   in the return array, is allowed to start.
  *
  * @return $return
- *   An array node IDs.
+ *   An array of node IDs.
+ *   An empty array if no matching nodes were found.
  */
-function ting_genre_page_get_events_with_term($tid, $count_limit, $time_limit) {
+function ting_genre_page_get_events_with_terms($tids, $count_limit, $time_limit) {
 	// Convert datetimes to the database format.
 	$now = date('Y-m-d H:i:s'); 
 	$time_limit = date('Y-m-d H:i:s', time() + ($time_limit * 24 * 3600));
@@ -52,7 +53,7 @@ function ting_genre_page_get_events_with_term($tid, $count_limit, $time_limit) {
 	$query->entityCondition('entity_type', 'node')
 		->entityCondition('bundle', 'ding_event')
 		->propertyCondition('status', 1)
-		->fieldCondition('field_ding_event_tags', 'tid', $tid)
+		->fieldCondition('field_ding_event_tags', 'tid', $tids)
 		// Limit the result to events that hasn't completed yet.
 		->fieldCondition('field_ding_event_date', 'value2', $now, '>')
 		// Add the supplied $time_limit contraint to our query.
@@ -62,16 +63,39 @@ function ting_genre_page_get_events_with_term($tid, $count_limit, $time_limit) {
 		// Add the supplied $count_limit constraint.
 		->range(0, $count_limit);
 	$result = $query->execute();
-	$return = isset($result['node']) ? array_keys($result['node']) : array();
-	return $return;	
+	return isset($result['node']) ? array_keys($result['node']) : array();
 }
 
 /**
- * Helper function to get the value from the field with the specified field 
- * name. This function is only meant to be used with single-value-fields, and
- * will only return the first value in case of a multi-value-field.
+ * Get nodes of type 'ding_news' with specified tags.
+ *
+ * @param $tids
+ *   A string specifying a term ID or and array of term IDs to match against.
+ * @param $count_limit
+ *   The max number of nodes to return.
+ * 
+ * @return $return
+ *   An array of node IDs.
+ *   An empty array if no matching nodes were found.
  */
-function _ting_genre_page_get_field_value($node, $field_name) {
+function ting_genre_page_get_news_with_terms($tids, $count_limit) {
+	$now = time();
+	$query = new EntityFieldQuery();
+	$query->entityCondition('entity_type', 'node')
+		->entityCondition('bundle')
+		->propertyCondition('status', 1)
+		->fieldCondition('field_ding_news_tag', 'tid', $tids)
+		// Ensure we get the most recent news.
+		->propertyOrdeBy('created', 'DESC')
+		->range(0, $count_limit);
+	$result = $query->execute();
+	return isset($result['node']) ? array_keys($result['node']) : array();
+}
+
+/**
+ * Helper function to get a setting from a field value (only single value).
+ */
+function _ting_genre_page_get_setting($node, $field_name) {
 	if (isset($node->{$field_name}) && !empty($node->{$field_name})) {
 		$value = field_get_items('node', $node, $field_name);
 		return array_shift(array_shift(array_values($value)));

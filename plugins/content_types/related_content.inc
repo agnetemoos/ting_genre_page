@@ -25,18 +25,23 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
     $tid = _ting_genre_page_get_field_value($node, $field_name);
     // Only try to get the nodes if the genre page was tagged.
     if ($tid) {
-      // Get the total count limit.
-      $field_name = 'field_related_content_count';
-      $total_count_limit = _ting_genre_page_get_field_value($node, $field_name);
+      $tids = array($tid);
       // Get the event count limit.
       $field_name = 'field_related_event_count';
-      $event_count_limit = _ting_genre_page_get_field_value($node, $field_name);
-      // Get the time limit for events
+      $count_limit = _ting_genre_page_get_field_value($node, $field_name);
+      // Get the event time limit.
       $field_name = 'field_related_event_time_limit';
-      $event_time_limit = _ting_genre_page_get_field_value($node, $field_name);
-      // Convert from days -> seconds
-      ting_genre_page_get_events_with_term($tid, $event_count_limit, 
-        $event_time_limit);      
+      $time_limit = _ting_genre_page_get_field_value($node, $field_name);
+      $nids = ting_genre_page_get_events_with_terms($tid, $count_limit, $time_limit);
+      // Get the total count
+      $field_name = 'field_related_content_count';
+      $count_limit = _ting_genre_page_get_field_value($node, $field_name);
+      // Substract the events found above from the total count, and fill the
+      // remaining space with nodes of type 'ding_news'.
+      $count_limit -= count($nids);
+      if ($count_limit > 0) {
+
+      }
     }
   }
   $block->content = $content;
