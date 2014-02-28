@@ -6,6 +6,8 @@
 
 include_once 'ting_genre_page.features.inc';
 
+// TODO: Define constant that controls how many nodes we use pr group.
+
 /**
  * Implements hook_ctools_plugin_directory().
  *
@@ -25,7 +27,6 @@ function ting_genre_page_init() {
 	$called = &drupal_Static(__FUNCTION__);
 	if (!$called) {
 		$nids = ting_genre_page_get_events_with_terms(10, 1, 352);
-		$nodes = node_load_multiple($nids);
 	}	
 }
 
@@ -38,19 +39,28 @@ function ting_genre_page_theme($existing, $type, $theme, $path) {
 			'variables' => array(
 				'events' => array(),
 				'news' => array(),
-				'group_count' => 4,
 			),
 			'template' => 'ting-genre-page-related-content',
 			'path' => $path . '/templates'
 		),
-		'ting_genre_page_related_content_group' => array(
-			'variables' => array(
-				'nodes' => array(),
-			),
-			'template' => 'ting-genre-page-related-content-row',
-			'path' => $path . '/templates',
-		),
 	);
+}
+
+/**
+ * Preprocess function for the ting_genre_page_related_content theme hook.
+ */
+function template_preprocess_ting_genre_page_related_content(&$variables) {
+	$events = $variables['events'];
+	$news = $variables['news'];
+	$groups = array();
+	$offset = 0;
+	$nodes = array_merge($events, $news);
+	while ($offset < count($nodes)) {
+		$group_nodes = array_slice($nodes, $offset, 4);
+		$offset += count($group_nodes);
+		// Setup the group array with the group nodes.
+	}
+	file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nodes , TRUE), FILE_APPEND);
 }
 
 /**
@@ -86,7 +96,13 @@ function ting_genre_page_get_events_with_terms($tids, $count_limit, $time_limit)
 		// Add the supplied $count_limit constraint.
 		->range(0, $count_limit);
 	$result = $query->execute();
-	return isset($result['node']) ? array_keys($result['node']) : array();
+	$events = array();
+	if (isset($result['node'])) {
+		$nids = array_keys($result['node']);
+		$events = node_load_multiple($nids);
+	}
+	return $events;
+
 }
 
 /**
@@ -112,7 +128,12 @@ function ting_genre_page_get_news_with_terms($tids, $count_limit) {
 		->propertyOrderBy('created', 'DESC')
 		->range(0, $count_limit);
 	$result = $query->execute();
-	return isset($result['node']) ? array_keys($result['node']) : array();
+	$news = array();
+	if (isset($result['node'])) {
+		$nids = array_keys($result['node']);
+		$news = node_load_multiple($nids);
+	}
+	return $news;
 }
 
 /**

@@ -15,5 +15,11 @@
 
 ?>
 
-<?php if ($rows)
+<?php if (TRUE): ?>
+	<div id="ting-genre-page-related-content">
+		<div class="group-blocks-inner group-blocks-four">
+			<p>En lille test...</p>
+		</div>
+	</div>
+<?php endif; ?>
 

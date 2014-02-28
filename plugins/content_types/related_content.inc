@@ -32,19 +32,22 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
       // Get the event time limit.
       $field_name = 'field_related_event_time_limit';
       $time_limit = _ting_genre_page_get_setting($node, $field_name);
-      $nids = ting_genre_page_get_events_with_terms($tid, $count_limit, $time_limit);
+      $events = ting_genre_page_get_events_with_terms($tid, $count_limit, $time_limit);
       // Get the total count
       $field_name = 'field_related_content_count';
       $count_limit = _ting_genre_page_get_setting($node, $field_name);
       // Substract the events found above from the total count, and fill the
       // remaining space with nodes of type 'ding_news'.
-      $count_limit -= count($nids);
+      $count_limit -= count($events);
+      $news = array();
       if ($count_limit > 0) {
-        $temp = ting_genre_page_get_news_with_terms($tid, $count_limit);
-        $nids = array_merge($nids, $temp);
+        $news = ting_genre_page_get_news_with_terms($tid, $count_limit);
       }
-      $nodes = node_load_multiple($nids);
-      file_put_contents("/home/drupalpro/debug/debug.txt", print_r($nids , TRUE), FILE_APPEND);
+      $content = array(
+        '#theme' => 'ting_genre_page_related_content',
+        '#events' => $events,
+        '#news' => $news,
+      );
     }
   }
   $block->content = $content;
