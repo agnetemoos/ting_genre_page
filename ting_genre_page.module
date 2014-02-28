@@ -30,6 +30,30 @@ function ting_genre_page_init() {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function ting_genre_page_theme($existing, $type, $theme, $path) {
+	return array(
+		'ting_genre_page_related_content' => array(
+			'variables' => array(
+				'events' => array(),
+				'news' => array(),
+				'group_count' => 4,
+			),
+			'template' => 'ting-genre-page-related-content',
+			'path' => $path . '/templates'
+		),
+		'ting_genre_page_related_content_group' => array(
+			'variables' => array(
+				'nodes' => array(),
+			),
+			'template' => 'ting-genre-page-related-content-row',
+			'path' => $path . '/templates',
+		),
+	);
+}
+
+/**
  * Get nodes of type 'ding_event' with the specified tags.
  * 
  * @param $tids
