@@ -32,7 +32,7 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
       // Get the event time limit.
       $field_name = 'field_related_event_time_limit';
       $time_limit = _ting_genre_page_get_setting($node, $field_name);
-      $events = ting_genre_page_get_events_with_terms($tid, $count_limit, $time_limit);
+      $events = ting_genre_page_get_events_with_terms($tids, $count_limit, $time_limit);
       // Get the total count
       $field_name = 'field_related_content_count';
       $count_limit = _ting_genre_page_get_setting($node, $field_name);
@@ -41,7 +41,7 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
       $count_limit -= count($events);
       $news = array();
       if ($count_limit > 0) {
-        $news = ting_genre_page_get_news_with_terms($tid, $count_limit);
+        $news = ting_genre_page_get_news_with_terms($tids, $count_limit);
       }
       $content = array(
         '#theme' => 'ting_genre_page_related_content',
