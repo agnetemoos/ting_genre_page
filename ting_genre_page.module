@@ -48,26 +48,33 @@ function template_preprocess_ting_genre_page_related_content(&$variables) {
 	// We could do something different with events and news. In this default
 	// implementation we show them together, events first and news last.
 	$nodes = array_merge($events, $news);
-	$rows = array();
+	$row_classes = array(
+		1 => 'group-blocks--one',
+		2 => 'group-blocks--two',
+		3 => 'group-blocks--three',
+		4 => 'group-blocks--four',
+	);
   $column_classes = array(
-    'group-blocks--first',
-    'group-blocks--second',
-    'group-blocks--third',
-    'group-blocks--fourth',
-  );	
+    0 => 'group-blocks--first',
+    1 => 'group-blocks--second',
+    2 => 'group-blocks--third',
+    3 => 'group-blocks--fourth',
+  );
+  $rows = array();	
 	$offset = 0;
 	// Setup each row of nodes
 	while ($offset < count($nodes)) {
 		$row_nodes = array_slice($nodes, $offset, TING_GENRE_PAGE_NODES_PR_ROW);
+		$row_count = count($row_nodes);
+		$offset += $row_count;
 		$coloumns = array();
-		$offset += count($row_nodes);
 		foreach ($row_nodes as $key => $node) {
 			$columns[$column_classes[$key]] = array(
 				'title' => check_plain($node->title),
 				'url' => url(drupal_get_path_alias('node/' . $node->nid)),
 			);
 		}
-		$rows[]['columns'] = $columns;
+		$rows[$row_classes[$row_count]]['columns'] = $columns;
 	}
 	$variables['rows'] = empty($rows) ? FALSE : $rows;
 }

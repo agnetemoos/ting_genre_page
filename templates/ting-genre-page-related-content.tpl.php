@@ -17,8 +17,8 @@
 
 <?php if ($rows): ?>
 	<div id="ting-genre-page-related-content" class="group-blocks--wrapper">
-		<?php foreach ($rows as $row): ?>
-			<div class="group-blocks--inner group-blocks--four">
+		<?php foreach ($rows as $row_class => $row): ?>
+			<div class="<?php print $row_class; ?> group-blocks--inner">
 				<?php foreach($row['columns'] as $column_class => $column): ?>
 					<div class="<?php print $column_class; ?>">
 						<a href="<?php print $column['url']; ?>">
