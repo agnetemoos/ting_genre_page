@@ -9,8 +9,8 @@
  *  - $news
  *    An arary of related news (node objects) for the genre page.
  *  - $rows
- *    A render array containing each row of node objects to be displayed as
- *    related content on the genre page.
+ *    An array containing each row of node objects to be displayed as related 
+ *    content on the genre page.
  */
 
 ?>

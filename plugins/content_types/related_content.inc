@@ -25,6 +25,7 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
     $tid = _ting_genre_page_get_setting($node, $field_name);
     // Only try to get the nodes if the genre page was tagged.
     if ($tid) {
+      // For now we only work with one $tid.
       $tids = array($tid);
       // Get the event count limit.
       $field_name = 'field_related_event_count';
@@ -47,6 +48,7 @@ function related_content_content_type_render($subtype, $conf, $panel_args, $cont
         '#theme' => 'ting_genre_page_related_content',
         '#events' => $events,
         '#news' => $news,
+        '#nodes_pr_row' => 4,
       );
     }
   }
