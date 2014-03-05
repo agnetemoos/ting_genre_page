@@ -71,7 +71,12 @@ function template_preprocess_ting_genre_page_related_content(&$variables) {
 				$image = field_view_field('node', $node, 'field_ding_event_title_image', 'default');
 				file_put_contents("/home/drupalpro/debug/debug.txt", print_r($image, TRUE), FILE_APPEND);	
 			}
+			else if ($node->type == 'ding_news') {
+				$image = field_view_field('node', $node, 'field_ding_news_title_image', 'default');
+				file_put_contents("/home/drupalpro/debug/debug.txt", print_r($image, TRUE), FILE_APPEND);	
+			}			
 			$columns[$column_classes[$key]] = array(
+				'image' => $image,
 				'title' => check_plain($node->title),
 				'url' => url(drupal_get_path_alias('node/' . $node->nid)),
 			);
