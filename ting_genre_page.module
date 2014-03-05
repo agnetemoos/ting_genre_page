@@ -68,8 +68,8 @@ function template_preprocess_ting_genre_page_related_content(&$variables) {
 		$coloumns = array();	
 		foreach ($row_nodes as $key => $node) {
 			if ($node->type == 'ding_event') {
-				$field_items = field_get_items('node', $node, 'field_ding_event_title_image');		
-				file_put_contents("/home/drupalpro/debug/debug.txt", print_r($field_items, TRUE), FILE_APPEND);
+				$image = field_view_field('node', $node, 'field_ding_event_title_image', 'default');
+				file_put_contents("/home/drupalpro/debug/debug.txt", print_r($image, TRUE), FILE_APPEND);	
 			}
 			$columns[$column_classes[$key]] = array(
 				'title' => check_plain($node->title),
