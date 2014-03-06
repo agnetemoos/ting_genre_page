@@ -67,14 +67,27 @@ function template_preprocess_ting_genre_page_related_content(&$variables) {
 		$offset += $row_count;
 		$coloumns = array();	
 		foreach ($row_nodes as $key => $node) {
-			if ($node->type == 'ding_event') {
-				$image = field_view_field('node', $node, 'field_ding_event_title_image', 'default');
-				file_put_contents("/home/drupalpro/debug/debug.txt", print_r($image, TRUE), FILE_APPEND);	
+			// Display the title image with the cs_adaptive_image formatter.
+			$field_name = 'field_ding_event_title_image';
+			if ($node->type == 'ding_news') {
+				$field_name = 'field_ding_news_title_image';
 			}
-			else if ($node->type == 'ding_news') {
-				$image = field_view_field('node', $node, 'field_ding_news_title_image', 'default');
-				file_put_contents("/home/drupalpro/debug/debug.txt", print_r($image, TRUE), FILE_APPEND);	
-			}			
+			$image = field_view_field('node', $node, $field_name, array(
+				'label' => 'hidden',
+				'type' => 'cs_adaptive_image',
+				'settings' => array(
+					'image_link' => '', // We take care of the linking ourself
+					'styles' => array(
+						'breakpoint_1' => 768,
+						'breakpoint_2' => 480,
+						'style_1' => 'ding_panorama_primary_large',
+						'style_2' => 'ding_panorama_primary_small',
+						'fallback_style' => 'ding_panorama_primary_large',
+						'max_style' => 'ding_panorama_primary_large',
+					),
+				), 
+			));
+			// Setup the column.
 			$columns[$column_classes[$key]] = array(
 				'image' => $image,
 				'title' => check_plain($node->title),
@@ -84,6 +97,7 @@ function template_preprocess_ting_genre_page_related_content(&$variables) {
 		$rows[$row_classes[$row_count]]['columns'] = $columns;
 	}
 	$variables['rows'] = empty($rows) ? FALSE : $rows;
+	//file_put_contents("/home/drupalpro/debug/debug.txt", print_r($image, TRUE), FILE_APPEND);	
 }
 
 /**

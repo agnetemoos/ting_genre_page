@@ -15,6 +15,7 @@ dependencies[] = ting_inspiration_list
 dependencies[] = ting_new_materials
 dependencies[] = ding_news
 dependencies[] = ding_event
+dependencies[] = cs_adaptive_image
 features[ctools][] = page_manager:pages_default:1
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
