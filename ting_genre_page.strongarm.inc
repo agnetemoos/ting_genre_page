@@ -73,6 +73,9 @@ function ting_genre_page_strongarm() {
         'path' => array(
           'weight' => '2',
         ),
+        'redirect' => array(
+          'weight' => '7',
+        ),
       ),
       'display' => array(),
     ),
@@ -124,6 +127,13 @@ function ting_genre_page_strongarm() {
   $strongarm->name = 'node_submitted_genre_page';
   $strongarm->value = 1;
   $export['node_submitted_genre_page'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'ting_genre_pages_default_number_per_row';
+  $strongarm->value = '7';
+  $export['ting_genre_pages_default_number_per_row'] = $strongarm;
 
   return $export;
 }

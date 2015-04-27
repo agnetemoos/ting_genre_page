@@ -24,9 +24,9 @@ function ting_genre_page_field_group_info() {
     'weight' => '3',
     'children' => array(
       0 => 'field_ddelibra_new_search',
-      1 => 'field_ting_new_materials_limit',
-      2 => 'field_ting_new_materials_search',
-      3 => 'field_new_materials_row_count',
+      1 => 'field_new_materials_row_count',
+      2 => 'field_ting_new_materials_limit',
+      3 => 'field_ting_new_materials_search',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -53,10 +53,10 @@ function ting_genre_page_field_group_info() {
     'label' => 'Related content',
     'weight' => '5',
     'children' => array(
-      0 => 'field_ting_genre_page_tags',
-      1 => 'field_related_content_count',
-      2 => 'field_related_event_count',
-      3 => 'field_related_event_time_limit',
+      0 => 'field_related_content_count',
+      1 => 'field_related_event_count',
+      2 => 'field_related_event_time_limit',
+      3 => 'field_ting_genre_page_tags',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -81,10 +81,10 @@ function ting_genre_page_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Related links',
-    'weight' => '14',
+    'weight' => '6',
     'children' => array(
-      0 => 'field_related_link_title',
-      1 => 'field_related_link_image',
+      0 => 'field_related_link_image',
+      1 => 'field_related_link_title',
       2 => 'field_related_link_url',
     ),
     'format_type' => 'fieldset',
@@ -112,10 +112,9 @@ function ting_genre_page_field_group_info() {
     'label' => 'Inspiration list',
     'weight' => '4',
     'children' => array(
-      0 => 'field_ddelibra_inspiration_list',
-      1 => 'field_inspiration_list_search',
-      2 => 'field_inspiration_list_row_count',
-      3 => 'field_inspiration_list_raw_count',
+      0 => 'field_inspiration_search',
+      1 => 'field_inspiration_raw_count',
+      2 => 'field_inspiration_row_count',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

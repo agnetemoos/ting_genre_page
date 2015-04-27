@@ -60,52 +60,6 @@ function ting_genre_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-genre_page-field_ddelibra_inspiration_list'
-  $field_instances['node-genre_page-field_ddelibra_inspiration_list'] = array(
-    'bundle' => 'genre_page',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'If set the Inspiration list fetches search result from DDELibra instead of Datawell.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'teaser_highlight' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_ddelibra_inspiration_list',
-    'label' => 'DDELibra Inspiration list search query',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 7,
-    ),
-  );
-
   // Exported field_instance: 'node-genre_page-field_ddelibra_new_search'
   $field_instances['node-genre_page-field_ddelibra_new_search'] = array(
     'bundle' => 'genre_page',
@@ -152,8 +106,8 @@ function ting_genre_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-genre_page-field_inspiration_list_raw_count'
-  $field_instances['node-genre_page-field_inspiration_list_raw_count'] = array(
+  // Exported field_instance: 'node-genre_page-field_inspiration_raw_count'
+  $field_instances['node-genre_page-field_inspiration_raw_count'] = array(
     'bundle' => 'genre_page',
     'default_value' => array(
       0 => array(
@@ -161,7 +115,7 @@ function ting_genre_page_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'The raw result count.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -173,7 +127,7 @@ function ting_genre_page_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 14,
+        'weight' => 18,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -189,12 +143,12 @@ function ting_genre_page_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_inspiration_list_raw_count',
+    'field_name' => 'field_inspiration_raw_count',
     'label' => 'Inspiration list raw count',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
-      'max' => 1000,
-      'min' => 100,
+      'max' => '',
+      'min' => '',
       'prefix' => '',
       'suffix' => '',
       'user_register_form' => FALSE,
@@ -204,12 +158,12 @@ function ting_genre_page_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 9,
+      'weight' => 34,
     ),
   );
 
-  // Exported field_instance: 'node-genre_page-field_inspiration_list_row_count'
-  $field_instances['node-genre_page-field_inspiration_list_row_count'] = array(
+  // Exported field_instance: 'node-genre_page-field_inspiration_row_count'
+  $field_instances['node-genre_page-field_inspiration_row_count'] = array(
     'bundle' => 'genre_page',
     'default_value' => array(
       0 => array(
@@ -217,7 +171,7 @@ function ting_genre_page_field_default_field_instances() {
       ),
     ),
     'deleted' => 0,
-    'description' => 'The number of rows in the inspiration list.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -229,7 +183,7 @@ function ting_genre_page_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 13,
+        'weight' => 19,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -245,12 +199,12 @@ function ting_genre_page_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_inspiration_list_row_count',
+    'field_name' => 'field_inspiration_row_count',
     'label' => 'Inspiration list row count',
     'required' => 0,
     'settings' => array(
-      'max' => 10,
-      'min' => 0,
+      'max' => '',
+      'min' => '',
       'prefix' => '',
       'suffix' => '',
       'user_register_form' => FALSE,
@@ -260,12 +214,12 @@ function ting_genre_page_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 8,
+      'weight' => 33,
     ),
   );
 
-  // Exported field_instance: 'node-genre_page-field_inspiration_list_search'
-  $field_instances['node-genre_page-field_inspiration_list_search'] = array(
+  // Exported field_instance: 'node-genre_page-field_inspiration_search'
+  $field_instances['node-genre_page-field_inspiration_search'] = array(
     'bundle' => 'genre_page',
     'default_value' => NULL,
     'deleted' => 0,
@@ -276,7 +230,7 @@ function ting_genre_page_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 17,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -292,8 +246,8 @@ function ting_genre_page_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_inspiration_list_search',
-    'label' => 'Inspirations list search query',
+    'field_name' => 'field_inspiration_search',
+    'label' => 'Inspiration list search query',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -303,10 +257,10 @@ function ting_genre_page_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 100,
+        'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 32,
     ),
   );
 
@@ -811,13 +765,11 @@ If 0 is selected here all the related content will link to \'News\' type content
   // Translatables
   // Included for use with string extractors like potx.
   t('Body');
-  t('DDELibra Inspiration list search query');
   t('DDELibra New Materials search query');
-  t('If set the Inspiration list fetches search result from DDELibra instead of Datawell.');
   t('If used new materials list is fetched from DDELibra instead of datawell. To limit new materials to certain amount of days use the code rh=amountofdays (E.g. rh=90).');
   t('Inspiration list raw count');
   t('Inspiration list row count');
-  t('Inspirations list search query');
+  t('Inspiration list search query');
   t('Limit period');
   t('New materials row count');
   t('New materials search query');
@@ -833,8 +785,6 @@ If 0 is selected here all the related content will link to \'News\' type content
   t('Tag');
   t('The max number of links to related content.');
   t('The number of rows for this new materials list.');
-  t('The number of rows in the inspiration list.');
-  t('The raw result count.');
   t('The title for the related link.');
   t('The url for this related link. Can be both internal and external.');
 
